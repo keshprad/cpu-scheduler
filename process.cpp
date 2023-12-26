@@ -1,11 +1,19 @@
 #include "process.h"
-#include "process_slice.h"
 #include <iostream>
-#include <utility>
-#include <vector>
+#include <string>
 
-Process::Process(int id, int priority, std::vector<ProcessSlice> &&slices)
-    : m_Id(id), m_Priority(priority), m_Slices(std::move(slices)) {}
+Process::Process(std::string name, int arrival_time, int burst_time,
+                 int priority)
+    : m_Name(name), m_ArrivalTime(arrival_time), m_BurstTime(burst_time),
+      m_Priority(priority) {}
 
-Process::Process(int id, int priority, std::vector<ProcessSlice> &slices)
-    : m_Id(id), m_Priority(priority), m_Slices(slices) {}
+// Define an overload for the << operator
+std::ostream &operator<<(std::ostream &os, const Process &obj) {
+  os << "{\n"
+     << "\tname: \"" << obj.m_Name << "\",\n"
+     << "\tarrival_time: " << obj.m_ArrivalTime << ",\n"
+     << "\tburst_time: " << obj.m_BurstTime << ",\n"
+     << "\tpriority: " << obj.m_Priority << ",\n"
+     << '}';
+  return os;
+}
