@@ -3,6 +3,7 @@
 
 #include <string>
 
+// class for Process
 class Process {
 private:
   std::string m_Name;

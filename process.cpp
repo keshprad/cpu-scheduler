@@ -9,6 +9,7 @@ Process::Process(std::string name, int arrival_time, int burst_time,
 
 // Define an overload for the << operator
 std::ostream &operator<<(std::ostream &os, const Process &obj) {
+  // push member variables to output stream
   os << "{\n"
      << "\tname: \"" << obj.m_Name << "\",\n"
      << "\tarrival_time: " << obj.m_ArrivalTime << ",\n"
