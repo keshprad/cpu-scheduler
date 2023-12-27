@@ -1,4 +1,5 @@
 #include "first_come_first_serve.h"
+#include "algorithm"
 #include "iostream"
 
 // FirstComeFirstServe::FirstComeFirstServe() {}
@@ -17,4 +18,24 @@ void FirstComeFirstServe::addProcess(Process proc) {
                        });
   // Insert the new element at the found position
   m_ReadyQueue.insert(insertionIndex, proc);
+}
+
+// execute all processes added to the scheduler
+void FirstComeFirstServe::exec() {
+  for (auto proc : m_ReadyQueue) {
+    // start time for current proc: either the prev event end time or curr proc
+    // arrival time
+    int start_time = std::max(
+        m_Events.empty() ? 0 : m_Events[m_Events.size() - 1].getEndTime(),
+        proc.getArrivalTime());
+    // calculate end time
+    int end_time = start_time + proc.getBurstTime();
+
+    // create and push event
+    Event e(proc.getName(), start_time, end_time);
+    m_Events.push_back(e);
+  }
+
+  // clear ready queue
+  m_ReadyQueue.clear();
 }

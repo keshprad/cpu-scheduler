@@ -11,6 +11,7 @@ private:
 
 public:
   void addProcess(Process proc) override;
+  void exec() override;
 };
 
 #endif

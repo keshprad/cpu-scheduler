@@ -14,4 +14,5 @@ std::ostream &operator<<(std::ostream &os, const Event &obj) {
      << "\tstart_time: " << obj.m_StartTime << ",\n"
      << "\tend_time: " << obj.m_EndTime << ",\n"
      << '}';
+  return os;
 }
