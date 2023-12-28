@@ -32,7 +32,7 @@ void FirstComeFirstServe::exec() {
     int end_time = start_time + proc.getBurstTime();
 
     // create and push event
-    Event e(proc.getName(), start_time, end_time);
+    Event e(proc.getPid(), start_time, end_time);
     m_Events.push_back(e);
   }
 

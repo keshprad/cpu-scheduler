@@ -6,15 +6,15 @@
 // class for Process
 class Process {
 private:
-  std::string m_Name;
+  int m_Pid;
   int m_ArrivalTime;
   int m_BurstTime;
   int m_Priority;
 
 public:
-  Process(std::string name, int arrival_time, int burst_time, int priority);
+  Process(int pid, int arrival_time, int burst_time, int priority);
 
-  const std::string &getName() const { return m_Name; }
+  int getPid() const { return m_Pid; }
   int getArrivalTime() const { return m_ArrivalTime; }
   int getBurstTime() const { return m_BurstTime; }
   int getPriority() const { return m_Priority; }

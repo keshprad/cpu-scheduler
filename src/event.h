@@ -6,13 +6,13 @@
 
 class Event {
 private:
-  std::string m_ProcessName;
+  int m_ProcessPid;
   int m_StartTime;
   int m_EndTime;
 
 public:
-  Event(std::string process_name, int start_time, int end_time);
-  const std::string &getProcessName() const { return m_ProcessName; }
+  Event(int process_pid, int start_time, int end_time);
+  int getProcessPid() const { return m_ProcessPid; }
   int getStartTime() const { return m_StartTime; }
   int getEndTime() const { return m_EndTime; }
 
