@@ -10,7 +10,7 @@ private:
   std::vector<Process> m_ReadyQueue;
 
 public:
-  void addProcess(Process proc) override;
+  void scheduleProcess(Process proc) override;
   void exec() override;
 };
 
