@@ -10,7 +10,23 @@ void CPUScheduler::addProcess(Process proc) {
   // 1. add to list of processes
   m_Procs.push_back(proc);
   // 2. create process state
-  m_ProcessStates[pid] = ProcessState(pid);
+  m_ProcessStates[pid] = ProcessState(pid, proc.getArrivalTime());
   // 3. schedule process
   scheduleProcess(proc);
 }
+
+double CPUScheduler::getAverageTurnaroundTime() {
+  double total = 0;
+  for (auto proc : m_Procs) {
+    total += m_ProcessStates[proc.getPid()].m_TurnaroundTime;
+  }
+  return total / m_Procs.size();
+}
+
+double CPUScheduler::getAverageWaitingTime() {
+  double total = 0;
+  for (auto proc : m_Procs) {
+    total += m_ProcessStates[proc.getPid()].m_WaitingTime;
+  }
+  return total / m_Procs.size();
+};

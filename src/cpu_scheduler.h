@@ -22,7 +22,8 @@ public:
   const std::vector<Process> &getProcs() const { return m_Procs; }
   const std::vector<Event> &getEvents() const { return m_Events; }
 
-  // int getAverageTurnaroundTime();
+  double getAverageTurnaroundTime();
+  double getAverageWaitingTime();
 
   // add process to the CPUScheduler
   void addProcess(Process proc);

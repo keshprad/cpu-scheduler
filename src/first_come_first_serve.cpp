@@ -1,5 +1,6 @@
 #include "first_come_first_serve.h"
 #include <algorithm>
+#include <iostream>
 
 // FirstComeFirstServe::FirstComeFirstServe() {}
 
@@ -18,9 +19,14 @@ void FirstComeFirstServe::scheduleProcess(Process proc) {
 
 // execute all processes added to the scheduler
 void FirstComeFirstServe::exec() {
+  std::cout << "Before" << std::endl;
   for (auto proc : m_ReadyQueue) {
-    // start time for current proc: either the prev event end time or curr proc
-    // arrival time
+    std::cout << m_ProcessStates[proc.getPid()] << std::endl;
+  }
+
+  for (auto proc : m_ReadyQueue) {
+    // calculate start time for current proc: either the prev event end time or
+    // curr proc arrival time
     int start_time = std::max(
         m_Events.empty() ? 0 : m_Events[m_Events.size() - 1].getEndTime(),
         proc.getArrivalTime());
@@ -30,6 +36,18 @@ void FirstComeFirstServe::exec() {
     // create and push event
     Event e(proc.getPid(), start_time, end_time);
     m_Events.push_back(e);
+
+    // update process state
+    ProcessState &ps = m_ProcessStates[proc.getPid()];
+    ps.m_TotalCpuTime += end_time - start_time;
+    ps.m_WaitingTime += start_time - ps.m_LastCpuTime;
+    ps.m_TurnaroundTime = end_time - proc.getArrivalTime();
+    ps.m_LastCpuTime = end_time;
+  }
+
+  std::cout << "After" << std::endl;
+  for (auto proc : m_ReadyQueue) {
+    std::cout << m_ProcessStates[proc.getPid()] << std::endl;
   }
 
   // clear ready queue
