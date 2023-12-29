@@ -19,11 +19,6 @@ void FirstComeFirstServe::scheduleProcess(Process proc) {
 
 // execute all processes added to the scheduler
 void FirstComeFirstServe::exec() {
-  std::cout << "Before" << std::endl;
-  for (auto proc : m_ReadyQueue) {
-    std::cout << m_ProcessStates[proc.getPid()] << std::endl;
-  }
-
   for (auto proc : m_ReadyQueue) {
     // calculate start time for current proc: either the prev event end time or
     // curr proc arrival time
@@ -43,11 +38,6 @@ void FirstComeFirstServe::exec() {
     ps.m_WaitingTime += start_time - ps.m_LastCpuTime;
     ps.m_TurnaroundTime = end_time - proc.getArrivalTime();
     ps.m_LastCpuTime = end_time;
-  }
-
-  std::cout << "After" << std::endl;
-  for (auto proc : m_ReadyQueue) {
-    std::cout << m_ProcessStates[proc.getPid()] << std::endl;
   }
 
   // clear ready queue
