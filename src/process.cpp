@@ -2,7 +2,7 @@
 #include <ostream>
 #include <string>
 
-Process::Process(int pid, int arrival_time, int burst_time, int priority)
+Process::Process(int pid, double arrival_time, double burst_time, int priority)
     : m_Pid(pid), m_ArrivalTime(arrival_time), m_BurstTime(burst_time),
       m_Priority(priority) {}
 

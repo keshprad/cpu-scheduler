@@ -2,7 +2,7 @@
 #include <ostream>
 
 ProcessState::ProcessState() {}
-ProcessState::ProcessState(int pid, int arrival_time)
+ProcessState::ProcessState(int pid, double arrival_time)
     : m_Pid(pid),
       // initialize last timestamp executed on CPU to the arrival time
       m_LastCpuTime(arrival_time) {}

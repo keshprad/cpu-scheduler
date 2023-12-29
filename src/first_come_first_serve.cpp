@@ -19,11 +19,11 @@ void FirstComeFirstServe::exec() {
   for (auto proc : m_ReadyQueue) {
     // calculate start time for current proc: either the prev event end time or
     // curr proc arrival time
-    int start_time = std::max(
+    double start_time = std::max(
         m_Events.empty() ? 0 : m_Events[m_Events.size() - 1].getEndTime(),
         proc.getArrivalTime());
     // calculate end time
-    int end_time = start_time + proc.getBurstTime();
+    double end_time = start_time + proc.getBurstTime();
 
     // create and push event
     Event e(proc.getPid(), start_time, end_time);

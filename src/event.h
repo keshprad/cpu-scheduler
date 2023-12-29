@@ -7,14 +7,14 @@
 class Event {
 private:
   int m_ProcessPid;
-  int m_StartTime;
-  int m_EndTime;
+  double m_StartTime;
+  double m_EndTime;
 
 public:
   Event(int process_pid, int start_time, int end_time);
   int getProcessPid() const { return m_ProcessPid; }
-  int getStartTime() const { return m_StartTime; }
-  int getEndTime() const { return m_EndTime; }
+  double getStartTime() const { return m_StartTime; }
+  double getEndTime() const { return m_EndTime; }
 
   friend std::ostream &operator<<(std::ostream &os, const Event &obj);
 };

@@ -8,16 +8,16 @@
 class Process {
 private:
   int m_Pid;
-  int m_ArrivalTime;
-  int m_BurstTime;
+  double m_ArrivalTime;
+  double m_BurstTime;
   int m_Priority;
 
 public:
-  Process(int pid, int arrival_time, int burst_time, int priority);
+  Process(int pid, double arrival_time, double burst_time, int priority);
 
   int getPid() const { return m_Pid; }
-  int getArrivalTime() const { return m_ArrivalTime; }
-  int getBurstTime() const { return m_BurstTime; }
+  double getArrivalTime() const { return m_ArrivalTime; }
+  double getBurstTime() const { return m_BurstTime; }
   int getPriority() const { return m_Priority; }
 
   friend std::ostream &operator<<(std::ostream &os, const Process &obj);
