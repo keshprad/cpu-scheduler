@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <iostream>
+#include <ostream>
 #include <string>
 
 class Event {
