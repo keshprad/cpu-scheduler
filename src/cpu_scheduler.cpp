@@ -15,18 +15,24 @@ void CPUScheduler::addProcess(Process proc) {
   scheduleProcess(proc);
 }
 
-double CPUScheduler::getAverageTurnaroundTime() {
+double CPUScheduler::getAverageTurnaroundTime() const {
   double total = 0;
   for (auto proc : m_Procs) {
-    total += m_ProcessStates[proc.getPid()].m_TurnaroundTime;
+    // use .at(key) to preserve const
+    total += m_ProcessStates.at(proc.getPid()).m_TurnaroundTime;
   }
   return total / m_Procs.size();
 }
 
-double CPUScheduler::getAverageWaitingTime() {
+double CPUScheduler::getAverageWaitingTime() const {
   double total = 0;
   for (auto proc : m_Procs) {
-    total += m_ProcessStates[proc.getPid()].m_WaitingTime;
+    // use .at(key) to preserve const
+    total += m_ProcessStates.at(proc.getPid()).m_WaitingTime;
   }
   return total / m_Procs.size();
 };
+
+const ProcessState &CPUScheduler::getProcessState(int pid) const {
+  return m_ProcessStates.at(pid);
+}
