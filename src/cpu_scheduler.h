@@ -9,16 +9,13 @@
 
 // Abstract class for CPU schedulers
 class CPUScheduler {
-private:
-  std::string m_Name;
-
 protected:
   std::vector<Process> m_Procs;
   std::vector<Event> m_Events;
   std::unordered_map<int, ProcessState> m_ProcessStates;
 
 public:
-  const std::string &getName() const { return m_Name; }
+  virtual const std::string &getName() const = 0;
   const std::vector<Process> &getProcs() const { return m_Procs; }
   const std::vector<Event> &getEvents() const { return m_Events; }
 

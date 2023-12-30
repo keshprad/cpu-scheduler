@@ -1,5 +1,8 @@
 #include "shortest_job_next.h"
+#include "process.h"
 #include <algorithm>
+
+const std::string ShortestJobNext::m_Name = "ShortestJobNext";
 
 // adds process to necessary datastructures to schedule process
 void ShortestJobNext::scheduleProcess(Process proc) {
@@ -7,9 +10,7 @@ void ShortestJobNext::scheduleProcess(Process proc) {
   // Use lower_bound with a lamdba to find insertion index
   auto insertionIndex =
       std::lower_bound(m_ReadyQueue.begin(), m_ReadyQueue.end(), proc,
-                       [](const Process &a, const Process &b) {
-                         return a.getBurstTime() < b.getBurstTime();
-                       });
+                       Process::burstTimeComparator);
   // Insert the new element at the found position
   m_ReadyQueue.insert(insertionIndex, proc);
 }

@@ -20,6 +20,10 @@ public:
   double getBurstTime() const { return m_BurstTime; }
   int getPriority() const { return m_Priority; }
 
+  static bool arrivalTimeComparator(const Process &a, const Process &b);
+  static bool burstTimeComparator(const Process &a, const Process &b);
+  static bool priorityComparator(const Process &a, const Process &b);
+
   friend std::ostream &operator<<(std::ostream &os, const Process &obj);
 };
 

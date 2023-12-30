@@ -1,15 +1,15 @@
 #include "first_come_first_serve.h"
 #include <algorithm>
 
+const std::string FirstComeFirstServe::m_Name = "FirstComeFirstServe";
+
 // adds process to necessary datastructures to schedule process
 void FirstComeFirstServe::scheduleProcess(Process proc) {
   // add to ready queue
   // Use lower_bound with a lamdba to find insertion index
   auto insertionIndex =
       std::lower_bound(m_ReadyQueue.begin(), m_ReadyQueue.end(), proc,
-                       [](const Process &a, const Process &b) {
-                         return a.getArrivalTime() < b.getArrivalTime();
-                       });
+                       Process::arrivalTimeComparator);
   // Insert the new element at the found position
   m_ReadyQueue.insert(insertionIndex, proc);
 }
