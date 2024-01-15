@@ -4,6 +4,7 @@
 #include "event.h"
 #include "process.h"
 #include "process_state.h"
+#include <mutex>
 #include <unordered_map>
 #include <vector>
 
@@ -13,6 +14,7 @@ protected:
   std::vector<Process> m_Procs;
   std::vector<Event> m_Events;
   std::unordered_map<int, ProcessState> m_ProcessStates;
+  std::mutex scheduler_lock;
 
 public:
   virtual const std::string &getName() const = 0;
@@ -25,6 +27,8 @@ public:
 
   // add process to the CPUScheduler
   void addProcess(Process proc);
+  // tell if scheduler has awaiting processes
+  virtual bool hasAwaitingProcesses() const = 0;
   // adds process to necessary datastructures to schedule process
   virtual void scheduleProcess(Process proc) = 0;
   // execute all processes added to the CPUScheduler

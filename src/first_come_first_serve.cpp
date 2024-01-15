@@ -3,6 +3,11 @@
 
 const std::string FirstComeFirstServe::m_Name = "FirstComeFirstServe";
 
+// tell if scheduler has awaiting processes
+bool FirstComeFirstServe::hasAwaitingProcesses() const {
+  return !m_ReadyQueue.empty();
+};
+
 // adds process to necessary datastructures to schedule process
 void FirstComeFirstServe::scheduleProcess(Process proc) {
   // add to ready queue
@@ -16,9 +21,16 @@ void FirstComeFirstServe::scheduleProcess(Process proc) {
 
 // execute all processes added to the scheduler
 void FirstComeFirstServe::exec() {
-  for (auto proc : m_ReadyQueue) {
-    // calculate start time for current proc: either the prev event end time or
-    // curr proc arrival time
+  while (hasAwaitingProcesses()) {
+    // atomic section: use lock to execute each process
+    std::lock_guard<std::mutex> lockGuard(scheduler_lock);
+
+    // pop element from front
+    auto proc = m_ReadyQueue[0];
+    m_ReadyQueue.erase(m_ReadyQueue.begin());
+
+    // calculate start time for current proc: either the prev event end time
+    // or curr proc arrival time
     double start_time = std::max(
         m_Events.empty() ? 0 : m_Events[m_Events.size() - 1].getEndTime(),
         proc.getArrivalTime());
@@ -36,7 +48,4 @@ void FirstComeFirstServe::exec() {
     ps.m_TurnaroundTime = end_time - proc.getArrivalTime();
     ps.m_LastCpuTime = end_time;
   }
-
-  // clear ready queue
-  m_ReadyQueue.clear();
 }

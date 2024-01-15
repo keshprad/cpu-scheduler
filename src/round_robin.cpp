@@ -6,6 +6,11 @@ const std::string RoundRobin::m_Name = "RoundRobin";
 RoundRobin::RoundRobin() : m_Quantum(1) {}
 RoundRobin::RoundRobin(double quantum) : m_Quantum(quantum) {}
 
+// tell if scheduler has awaiting processes
+bool RoundRobin::hasAwaitingProcesses() const {
+  return !m_ReadyMinHeap.empty();
+};
+
 // adds process to necessary datastructures to schedule process
 void RoundRobin::scheduleProcess(Process proc) {
   // add to ready priority queue
@@ -13,7 +18,10 @@ void RoundRobin::scheduleProcess(Process proc) {
 }
 
 void RoundRobin::exec() {
-  while (!m_ReadyMinHeap.empty()) {
+  while (hasAwaitingProcesses()) {
+    // atomic section: use lock to execute each process
+    std::lock_guard<std::mutex> lockGuard(scheduler_lock);
+
     // get top element
     auto proc = m_ReadyMinHeap.top();
     // remove top element

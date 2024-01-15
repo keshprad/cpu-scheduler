@@ -27,6 +27,7 @@ public:
   RoundRobin(double quantum);
 
   const std::string &getName() const override { return m_Name; }
+  bool hasAwaitingProcesses() const override;
   void scheduleProcess(Process proc) override;
   void exec() override;
 };

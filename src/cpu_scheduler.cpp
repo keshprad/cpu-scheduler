@@ -7,6 +7,8 @@ void CPUScheduler::addProcess(Process proc) {
     throw std::runtime_error("Duplicate process PID");
   }
 
+  // atomic section: use lock to add process
+  std::lock_guard<std::mutex> lockGuard(scheduler_lock);
   // 1. add to list of processes
   m_Procs.push_back(proc);
   // 2. create process state
